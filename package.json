@@ -1,0 +1,27 @@
+{
+  "name": "@eth-optimism/core-utils",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ethereum-optimism/core-utils.git",
+  "author": "Kelvin Fichter <kelvinfichter@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "all": "yarn clean && yarn build && yarn test && yarn lint:fix && yarn lint",
+    "build": "tsc -p .",
+    "clean": "rimraf build/",
+    "lint": "tslint --format stylish --project .",
+    "lint:fix": "prettier --config prettier-config.json --write '{src,test}/**/*.ts'",
+    "test": "ts-mocha test/**/*.spec.ts"
+  },
+  "devDependencies": {
+    "@eth-optimism/dev": "^1.1.1",
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0",
+    "ts-mocha": "^8.0.0"
+  },
+  "dependencies": {
+    "@ethersproject/abstract-provider": "^5.0.9",
+    "debug": "^4.3.1",
+    "ethers": "^5.0.31"
+  }
+}
