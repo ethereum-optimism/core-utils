@@ -5,6 +5,7 @@ import {
   ctcCoder,
   encodeAppendSequencerBatch,
   decodeAppendSequencerBatch,
+  TxType,
 } from '../../src'
 import { expect } from 'chai'
 
@@ -22,6 +23,7 @@ describe('BatchEncoder', () => {
         nonce: 100,
         target: '0x' + '12'.repeat(20),
         data: '0x' + '99'.repeat(10),
+        type: TxType.EIP155,
       }
       const encoded = ctcCoder.eip155TxData.encode(eip155TxData)
       const decoded = ctcCoder.eip155TxData.decode(encoded)
@@ -59,6 +61,65 @@ describe('BatchEncoder', () => {
       const encoded = encodeAppendSequencerBatch(batch)
       const decoded = decodeAppendSequencerBatch(encoded)
       expect(decoded).to.deep.equal(batch)
+    })
+  })
+
+  describe('generic ctcCoder', () => {
+    it('should decode EIP155 txs to the correct value', () => {
+      const eip155TxData = {
+        sig: {
+          v: 1,
+          r: '0x' + '11'.repeat(32),
+          s: '0x' + '22'.repeat(32),
+        },
+        gasLimit: 500,
+        gasPrice: 100,
+        nonce: 100,
+        target: '0x' + '12'.repeat(20),
+        data: '0x' + '99'.repeat(10),
+        type: TxType.EIP155,
+      }
+      const encoded = ctcCoder.encode(eip155TxData)
+      const decoded = ctcCoder.decode(encoded)
+      expect(eip155TxData).to.deep.equal(decoded)
+    })
+
+    it('should decode ETH_SIGN txs to the correct value', () => {
+      // TODO(annieke): use real ETH_SIGN transaction
+      const ethSignTxData = {
+        sig: {
+          v: 1,
+          r: '0x' + '11'.repeat(32),
+          s: '0x' + '22'.repeat(32),
+        },
+        gasLimit: 500,
+        gasPrice: 100,
+        nonce: 100,
+        target: '0x' + '12'.repeat(20),
+        data: '0x' + '99'.repeat(10),
+        type: TxType.EthSign,
+      }
+      const encoded = ctcCoder.encode(ethSignTxData)
+      const decoded = ctcCoder.decode(encoded)
+      expect(ethSignTxData).to.deep.equal(decoded)
+    })
+
+    it('should return null when encoding an unknown type', () => {
+      const weirdTypeTxData = {
+        sig: {
+          v: 1,
+          r: '0x' + '11'.repeat(32),
+          s: '0x' + '22'.repeat(32),
+        },
+        gasLimit: 500,
+        gasPrice: 100,
+        nonce: 100,
+        target: '0x' + '12'.repeat(20),
+        data: '0x' + '99'.repeat(10),
+        type: 420,
+      }
+      const encoded = ctcCoder.encode(weirdTypeTxData)
+      expect(encoded).to.be.null
     })
   })
 })
