@@ -1,7 +1,11 @@
 {
   "name": "@eth-optimism/core-utils",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.5",
+  "main": "build/src/index.js",
+  "files": [
+    "build/src/**/*"
+  ],
+  "types": "build/src/index.d.ts",
   "repository": "git@github.com:ethereum-optimism/core-utils.git",
   "author": "Kelvin Fichter <kelvinfichter@gmail.com>",
   "license": "MIT",
