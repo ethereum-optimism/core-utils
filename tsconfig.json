@@ -9,7 +9,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "sourceMap": true,
-        "outDir": "dist",
+        "outDir": "./build",
         "lib": [
             "es7"
         ],
