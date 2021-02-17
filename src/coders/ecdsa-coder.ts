@@ -28,6 +28,7 @@ export interface DefaultEcdsaTxData {
   nonce: Uint24
   target: Address
   data: string
+  type: TxType
 }
 
 export interface EIP155TxData extends DefaultEcdsaTxData {}
@@ -150,6 +151,7 @@ class DefaultEcdsaTxCoder implements Coder {
       nonce: parseInt(sliceBytes(pos.nonce), 16),
       target: add0x(sliceBytes(pos.target)),
       data: add0x(txData.slice(pos.data.start * 2)),
+      type: this.txType,
     }
   }
 }
@@ -186,10 +188,37 @@ class Eip155TxCoder extends DefaultEcdsaTxCoder {
  * ctcCoder  *
  ************/
 
+function encode(data: EIP155TxData): string {
+  if (data.type === TxType.EIP155) {
+    return new Eip155TxCoder().encode(data)
+  }
+  if (data.type === TxType.EthSign) {
+    return new EthSignTxCoder().encode(data)
+  }
+  return null
+}
+
+function decode(data: string | Buffer): EIP155TxData {
+  if (Buffer.isBuffer(data)) {
+    data = data.toString()
+  }
+  data = remove0x(data)
+  const type = parseInt(data.slice(0, 2), 16)
+  if (type === TxType.EIP155) {
+    return new Eip155TxCoder().decode(data)
+  }
+  if (type === TxType.EthSign) {
+    return new EthSignTxCoder().decode(data)
+  }
+  return null
+}
+
 /*
  * Encoding and decoding functions for all txData types.
  */
 export const ctcCoder = {
   eip155TxData: new Eip155TxCoder(),
   ethSignTxData: new EthSignTxCoder(),
+  encode,
+  decode,
 }
