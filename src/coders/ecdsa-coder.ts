@@ -188,7 +188,7 @@ class Eip155TxCoder extends DefaultEcdsaTxCoder {
  * ctcCoder  *
  ************/
 
-function encode(data) {
+function encode(data: EIP155TxData): string {
   if (data.type === TxType.EIP155) {
     return new Eip155TxCoder().encode(data)
   }
@@ -198,7 +198,7 @@ function encode(data) {
   return null
 }
 
-function decode(data: string | Buffer) {
+function decode(data: string | Buffer): EIP155TxData {
   if (Buffer.isBuffer(data)) {
     data = data.toString()
   }

@@ -84,26 +84,6 @@ describe('BatchEncoder', () => {
       expect(eip155TxData).to.deep.equal(decoded)
     })
 
-    it('should decode ETH_SIGN txs to the correct value', () => {
-      // TODO(annieke): use real ETH_SIGN transaction
-      const ethSignTxData = {
-        sig: {
-          v: 1,
-          r: '0x' + '11'.repeat(32),
-          s: '0x' + '22'.repeat(32),
-        },
-        gasLimit: 500,
-        gasPrice: 100,
-        nonce: 100,
-        target: '0x' + '12'.repeat(20),
-        data: '0x' + '99'.repeat(10),
-        type: TxType.EthSign,
-      }
-      const encoded = ctcCoder.encode(ethSignTxData)
-      const decoded = ctcCoder.decode(encoded)
-      expect(ethSignTxData).to.deep.equal(decoded)
-    })
-
     it('should return null when encoding an unknown type', () => {
       const weirdTypeTxData = {
         sig: {
