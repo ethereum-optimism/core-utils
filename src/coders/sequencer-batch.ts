@@ -35,7 +35,6 @@ const appendSequencerBatch = async (
     to: OVM_CanonicalTransactionChain.address,
     data: '0x' + methodId + calldata,
   })
-
 }
 
 export const encodeAppendSequencerBatch = (
@@ -128,9 +127,15 @@ export const decodeAppendSequencerBatch = (
 
 module.exports.sequencerBatch = {
   encode: (b) => {
-    return ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) + encodeAppendSequencerBatch(b)
+    return (
+      ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
+      encodeAppendSequencerBatch(b)
+    )
   },
   decode: (b) => {
-    return ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) + decodeAppendSequencerBatch(b)
-  }
+    return (
+      ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
+      decodeAppendSequencerBatch(b)
+    )
+  },
 }
