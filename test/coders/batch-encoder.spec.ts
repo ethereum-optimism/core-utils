@@ -34,7 +34,7 @@ describe('BatchEncoder', () => {
   describe('appendSequencerBatch', () => {
     it('should work with the simple case', () => {
       const batch = {
-        shouldStartAtBatch: 0,
+        shouldStartAtElement: 0,
         totalElementsToAppend: 0,
         contexts: [],
         transactions: [],
@@ -46,7 +46,7 @@ describe('BatchEncoder', () => {
 
     it('should work with more complex case', () => {
       const batch = {
-        shouldStartAtBatch: 10,
+        shouldStartAtElement: 10,
         totalElementsToAppend: 1,
         contexts: [
           {
