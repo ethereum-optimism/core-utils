@@ -1,5 +1,5 @@
 import { add0x, remove0x, encodeHex } from '../common'
-import { Contract, BigNumber } from 'ethers'
+import { Contract, BigNumber, ethers } from 'ethers'
 import { keccak256 } from 'ethers/lib/utils'
 import { TransactionResponse } from '@ethersproject/abstract-provider'
 
@@ -35,12 +35,13 @@ const appendSequencerBatch = async (
     to: OVM_CanonicalTransactionChain.address,
     data: '0x' + methodId + calldata,
   })
+
 }
 
 export const encodeAppendSequencerBatch = (
   b: AppendSequencerBatchParams
 ): string => {
-  const encodedShouldStartAtBatch = encodeHex(b.shouldStartAtBatch, 10)
+  const encodeShouldStartAtElement = encodeHex(b.shouldStartAtElement, 10)
   const encodedTotalElementsToAppend = encodeHex(b.totalElementsToAppend, 6)
 
   const encodedContextsHeader = encodeHex(b.contexts.length, 6)
@@ -58,7 +59,7 @@ export const encodeAppendSequencerBatch = (
     return acc + encodedTxDataHeader + remove0x(cur)
   }, '')
   return (
-    encodedShouldStartAtBatch +
+    encodeShouldStartAtElement +
     encodedTotalElementsToAppend +
     encodedContexts +
     encodedTransactionData
@@ -79,7 +80,7 @@ export const decodeAppendSequencerBatch = (
 ): AppendSequencerBatchParams => {
   b = remove0x(b)
 
-  const shouldStartAtBatch = b.slice(0, 10)
+  const shouldStartAtElement = b.slice(0, 10)
   const totalElementsToAppend = b.slice(10, 16)
   const contextHeader = b.slice(16, 22)
   const contextCount = parseInt(contextHeader, 16)
@@ -118,9 +119,18 @@ export const decodeAppendSequencerBatch = (
   }
 
   return {
-    shouldStartAtBatch: parseInt(shouldStartAtBatch, 16),
+    shouldStartAtElement: parseInt(shouldStartAtElement, 16),
     totalElementsToAppend: parseInt(totalElementsToAppend, 16),
     contexts,
     transactions,
+  }
+}
+
+module.exports.sequencerBatch = {
+  encode: (b) => {
+    return ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) + encodeAppendSequencerBatch(b)
+  },
+  decode: (b) => {
+    return ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) + decodeAppendSequencerBatch(b)
   }
 }
