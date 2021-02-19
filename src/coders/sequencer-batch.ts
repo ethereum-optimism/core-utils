@@ -11,7 +11,7 @@ export interface BatchContext {
 }
 
 export interface AppendSequencerBatchParams {
-  shouldStartAtBatch: number // 5 bytes -- starts at batch
+  shouldStartAtElement: number // 5 bytes -- starts at batch
   totalElementsToAppend: number // 3 bytes -- total_elements_to_append
   contexts: BatchContext[] // total_elements[fixed_size[]]
   transactions: string[] // total_size_bytes[],total_size_bytes[]
