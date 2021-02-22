@@ -1,9 +1,27 @@
+import { toHexString } from './hex-strings'
+
 export const assert = (condition: () => boolean, reason?: string) => {
   try {
     if (condition() === false) {
-      throw new Error(`Assertion failed: ${reason}`)
+      throw new Error(`Assertion failed: ${ reason }`)
     }
   } catch (err) {
-    throw new Error(`Assertion failed: ${reason}\n${err}`)
+    throw new Error(`Assertion failed: ${ reason }\n${ err }`)
+  }
+}
+
+export const toRpcHexString = (n: number): string => {
+  if (n === 0) {
+    return '0x0'
+  } else {
+    return '0x' + toHexString(n).slice(2).replace(/^0+/, '')
+  }
+}
+
+export const padHexString = (str: string, length: number): string => {
+  if (str.length === 2 + length * 2) {
+    return str
+  } else {
+    return '0x' + str.slice(2).padStart(length * 2, '0')
   }
 }
