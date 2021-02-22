@@ -126,16 +126,14 @@ export const decodeAppendSequencerBatch = (
 }
 
 const sequencerBatch = {
-  encode: (b: AppendSequencerBatchParams) => (
+  encode: (b: AppendSequencerBatchParams) =>
     utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
-    encodeAppendSequencerBatch(b)
-  ),
-  decode: (b: string) => (
+    encodeAppendSequencerBatch(b),
+  decode: (b: string) =>
     utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
-    decodeAppendSequencerBatch(b)
-  ),
+    decodeAppendSequencerBatch(b),
 }
 
 module.exports = {
-  appendSequencerBatch
+  appendSequencerBatch,
 }
