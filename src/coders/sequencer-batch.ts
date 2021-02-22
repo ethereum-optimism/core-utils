@@ -137,5 +137,5 @@ const sequencerBatch = {
 module.exports = {
   appendSequencerBatch,
   encodeAppendSequencerBatch,
-  decodeAppendSequencerBatch
+  decodeAppendSequencerBatch,
 }
