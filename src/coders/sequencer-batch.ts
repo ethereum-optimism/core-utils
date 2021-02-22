@@ -1,5 +1,5 @@
 import { add0x, remove0x, encodeHex } from '../common'
-import { Contract, BigNumber, ethers } from 'ethers'
+import { Contract, BigNumber, utils } from 'ethers'
 import { keccak256 } from 'ethers/lib/utils'
 import { TransactionResponse } from '@ethersproject/abstract-provider'
 
@@ -125,17 +125,17 @@ export const decodeAppendSequencerBatch = (
   }
 }
 
-module.exports.sequencerBatch = {
-  encode: (b) => {
-    return (
-      ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
-      encodeAppendSequencerBatch(b)
-    )
-  },
-  decode: (b) => {
-    return (
-      ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
-      decodeAppendSequencerBatch(b)
-    )
-  },
+const sequencerBatch = {
+  encode: (b: AppendSequencerBatchParams) => (
+    utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
+    encodeAppendSequencerBatch(b)
+  ),
+  decode: (b: string) => (
+    utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
+    decodeAppendSequencerBatch(b)
+  ),
+}
+
+module.exports = {
+  appendSequencerBatch
 }
