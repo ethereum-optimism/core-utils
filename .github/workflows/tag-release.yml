@@ -19,8 +19,8 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
-          # draft: false
-          # prerelease: false
+          draft: false
+          prerelease: false
 
   publish:
     name: Build and publish
@@ -33,6 +33,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: yarn
       - run: yarn build
-      - run: npm publish --dry-run
+      - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
