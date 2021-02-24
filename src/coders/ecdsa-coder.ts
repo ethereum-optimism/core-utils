@@ -150,7 +150,8 @@ class DefaultEcdsaTxCoder implements Coder {
         v: parseInt(sliceBytes(pos.sig.v), 16),
       },
       gasLimit: parseInt(sliceBytes(pos.gasLimit), 16),
-      gasPrice: parseInt(sliceBytes(pos.gasPrice), 16) * CTC_TX_GAS_PRICE_MULT_FACTOR,
+      gasPrice:
+        parseInt(sliceBytes(pos.gasPrice), 16) * CTC_TX_GAS_PRICE_MULT_FACTOR,
       nonce: parseInt(sliceBytes(pos.nonce), 16),
       target: add0x(sliceBytes(pos.target)),
       data: add0x(txData.slice(pos.data.start * 2)),

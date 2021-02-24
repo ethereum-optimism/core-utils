@@ -52,7 +52,9 @@ describe('BatchEncoder', () => {
       } catch (e) {
         error = e
       }
-      expect(error.message).to.equal(`Gas Price ${badGasPrice} cannot be encoded`)
+      expect(error.message).to.equal(
+        `Gas Price ${badGasPrice} cannot be encoded`
+      )
     })
   })
 
