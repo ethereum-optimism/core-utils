@@ -16,6 +16,9 @@ jobs:
         env:
           JOB_CONTEXT: ${{ toJSON(job) }}
         run: echo "$JOB_CONTEXT"
+      - name: output
+        id: hi_hi
+        run: echo "::set-output name=action_fruit::strawberry"
       - name: Dump steps context
         env:
           STEPS_CONTEXT: ${{ toJSON(steps) }}
@@ -42,7 +45,6 @@ jobs:
         env:
           JOB_CONTEXT: ${{ toJSON(job) }}
         run: echo "$JOB_CONTEXT"
-        id: hi_hi
       - name: Dump steps context
         env:
           STEPS_CONTEXT: ${{ toJSON(steps) }}
