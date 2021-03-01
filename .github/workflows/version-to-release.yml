@@ -11,6 +11,8 @@ jobs:
   debug0:
     name: debug first step
     runs-on: ubuntu-latest
+    outputs: 
+      output1: ${{ steps.hi_hi.outputs }}
     steps:
       - name: Dump job context
         env:
@@ -23,9 +25,7 @@ jobs:
         env:
           STEPS_CONTEXT: ${{ toJSON(steps) }}
         run: echo "$STEPS_CONTEXT"
-    outputs: 
-      output1: ${{ steps.hi_hi.outputs }}
-
+    
 
   tag:
     name: Create tag for new version
