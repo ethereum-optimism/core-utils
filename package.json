@@ -1,6 +1,6 @@
 {
   "name": "@eth-optimism/core-utils",
-  "version": "0.1.8",
+  "version": "0.1.7",
   "main": "build/src/index.js",
   "files": [
     "build/src/**/*"
