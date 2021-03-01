@@ -11,6 +11,7 @@ jobs:
   debug0:
     name: debug first step
     runs-on: ubuntu-latest
+    outputs: ${{ steps.hi_hi.outputs }}
     steps:
       - name: Dump job context
         env:
