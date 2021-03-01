@@ -23,7 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: tag
     steps:
-      steps:
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJSON(job) }}
