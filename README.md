@@ -2,7 +2,7 @@
 
 ## What is this?
 
-`@eth-optimism/core-utils` contain the Optimistic Virtual Machine core utilities.
+`@eth-optimism/core-utils` contains the Optimistic Virtual Machine core utilities.
 
 ## Getting started
 
