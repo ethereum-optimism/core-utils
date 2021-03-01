@@ -20,7 +20,7 @@ jobs:
     name: Create release
     runs-on: ubuntu-latest
     needs: tag
-    if: ${{ needs.tag.output.tag }}
+    if: needs.tag.outputs.tag
     steps:
       - uses: actions/checkout@v2
       - uses: actions/create-release@v1
@@ -28,8 +28,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ needs.tag.output.tag }}
-          release_name: ${{ needs.tag.output.tag }}
+          tag_name: ${{ needs.tag.outputs.tag }}
+          release_name: ${{ needs.tag.outputs.tag }}
           draft: false
           prerelease: false
 
@@ -37,6 +37,7 @@ jobs:
     name: Build and publish
     runs-on: ubuntu-latest
     needs: tag
+    if: needs.tag.outputs.tag
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
