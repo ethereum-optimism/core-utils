@@ -47,7 +47,11 @@ export class Logger {
    * For printing logs representing an error.
    * @param message Message to print.
    */
-  public error(message: string): void {
+  public error(message: string | any[]): void {
+    // Backwards compatibility with previous logger
+    if (typeof message !== 'string') {
+      message = joinNewLines(...message)
+    }
     this._log(message, 'ERROR', 'red')
   }
 
@@ -63,8 +67,8 @@ export class Logger {
    * For printing debug logs.
    * @param message Message to print.
    */
-  public debug(...logs: any[]): void {
-    debug(joinNewLines(...logs))
+  public debug(message: string | any[]): void {
+    debug(this.namespace)(joinNewLines(...message))
   }
 
   /**
@@ -79,6 +83,30 @@ export class Logger {
       `${colors[color](`[${this.namespace}] [${category}]`)}: ${message}`
     )
   }
+}
+
+/**
+ * Forackwards compatibility:
+ * Gets a logger specific to the provided identifier.
+ *
+ * @param identifier The identifier to use to tag log statements from this logger.
+ * @param isTest Whether or not this is a test logger.
+ * @param debugToUseTestOnly The debug instance to use *should only be used for tests*
+ * @returns a Logger instance.
+ */
+export const getLogger = (
+  identifier: string,
+  isTest: boolean = false,
+  debugToUseTestOnly?: any
+): Logger => {
+  console.warn(`\`getLogger\` is now a legacy function and will soon be deprecated.
+                Please use \`new Logger(namespace)\` instead.`)
+
+  if (debugToUseTestOnly) {
+    console.warn(`Passing in a debugToUseTestOnly instance is now deprecated.`)
+  }
+
+  return new Logger(`${isTest ? 'test:' : ''}${identifier}`)
 }
 
 export const logError = (logger: Logger, message: string, e: Error): void => {
