@@ -23,7 +23,8 @@ jobs:
         env:
           STEPS_CONTEXT: ${{ toJSON(steps) }}
         run: echo "$STEPS_CONTEXT"
-    outputs: ${{ steps.hi_hi.outputs }}
+    outputs: 
+      output1: ${{ steps.hi_hi.outputs }}
 
 
   tag:
