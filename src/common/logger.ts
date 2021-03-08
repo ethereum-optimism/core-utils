@@ -1,4 +1,4 @@
-import pino, {Logger as PinoLogger} from 'pino'
+import pino, { Logger as PinoLogger } from 'pino'
 
 /**
  * Forackwards compatibility:
@@ -32,16 +32,20 @@ export class Logger {
     return pino({
       // Pretty printing enabled by default to maintain expectations
       prettyPrint: {
-        colorize: true
-      }
+        colorize: true,
+      },
     }).child({
       module: namespace,
-      isTest
+      isTest,
     })
   }
 }
 
-export const logError = (logger: PinoLogger, message: string, e: Error): void => {
+export const logError = (
+  logger: PinoLogger,
+  message: string,
+  e: Error
+): void => {
   logger.error(`${message}. 
     Error: ${e.message}. 
     Stack: ${e.stack}`)
