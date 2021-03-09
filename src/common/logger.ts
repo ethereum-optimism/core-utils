@@ -43,11 +43,8 @@ export class Logger {
 
     const loggerOptions = {
       name: options.name,
-      level: options.level || 'debug',
-    }
 
-    pino({
-      name: options.name,
+      level: options.level || 'debug',
 
       // Remove pid and hostname considering production runs inside docker
       base: null,
@@ -56,7 +53,7 @@ export class Logger {
       prettyPrint: {
         colorize: true,
       },
-    })
+    }
 
     this.inner = pino(loggerOptions)
   }
