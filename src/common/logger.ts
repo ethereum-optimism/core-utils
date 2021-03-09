@@ -49,6 +49,9 @@ export class Logger {
     pino({
       name: options.name,
 
+      // Remove pid and hostname considering production runs inside docker
+      base: null,
+
       // Pretty printing enabled by default to maintain expectations
       prettyPrint: {
         colorize: true,
