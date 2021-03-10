@@ -1,10 +1,14 @@
-import pino, { Logger as PinoLogger } from 'pino'
+import pino, {
+  Logger as PinoLogger,
+  LoggerOptions as PinoLoggerOptions,
+} from 'pino'
 
 export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
 
 export interface LoggerOptions {
   name: string
   level?: LogLevel
+  prettyPrint?: PinoLoggerOptions['prettyPrint']
 }
 
 /**
@@ -49,10 +53,7 @@ export class Logger {
       // Remove pid and hostname considering production runs inside docker
       base: null,
 
-      // Pretty printing enabled by default to maintain expectations
-      prettyPrint: {
-        colorize: true,
-      },
+      prettyPrint: options.prettyPrint || true,
     }
 
     this.inner = pino(loggerOptions)
