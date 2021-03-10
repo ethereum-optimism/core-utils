@@ -9,16 +9,13 @@ import { Coder, Signature, Uint16, Uint8, Uint24, Address } from './types'
 export enum TxType {
   EIP155 = 0,
   EthSign = 1,
-  none = 3,
 }
 
 export const txTypePlainText = {
   0: TxType.EIP155,
   1: TxType.EthSign,
-  3: TxType.none,
   EIP155: TxType.EIP155,
   EthSign: TxType.EthSign,
-  None: TxType.none,
 }
 
 export interface DefaultEcdsaTxData {
@@ -44,16 +41,14 @@ export interface EthSignTxData extends DefaultEcdsaTxData {}
 
 export const TX_TYPE_POSITION = { start: 0, end: 1 }
 
+/*
+ * The positions in the tx data for the EIP155TxData and EthSignTxData
+ */
+
 export const SIGNATURE_FIELD_POSITIONS = {
   r: { start: 1, end: 33 }, // 32 bytes
   s: { start: 33, end: 65 }, // 32 bytes
   v: { start: 65, end: 66 }, // 1 byte
-}
-
-export const CREATE_EOA_FIELD_POSITIONS = {
-  txType: TX_TYPE_POSITION, // 1 byte
-  sig: SIGNATURE_FIELD_POSITIONS, // 65 bytes
-  messageHash: { start: 66, end: 98 }, // 32 bytes
 }
 
 export const DEFAULT_ECDSA_TX_FIELD_POSITIONS = {
