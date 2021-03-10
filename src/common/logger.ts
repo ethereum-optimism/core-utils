@@ -11,30 +11,6 @@ export interface LoggerOptions {
 }
 
 /**
- * Forackwards compatibility:
- * Gets a logger specific to the provided identifier.
- *
- * @param identifier The identifier to use to tag log statements from this logger.
- * @param isTest Whether or not this is a test logger.
- * @param debugToUseTestOnly The debug instance to use *should only be used for tests*
- * @returns a Logger instance.
- */
-export const getLogger = (
-  identifier: string,
-  isTest: boolean = false,
-  debugToUseTestOnly?: any
-): Logger => {
-  console.warn(`\`getLogger\` is now a legacy function and will soon be deprecated.
-                Please use \`new Logger(namespace)\` instead.`)
-
-  if (debugToUseTestOnly) {
-    console.warn(`Passing in a debugToUseTestOnly instance is now deprecated.`)
-  }
-
-  return new Logger({ name: identifier })
-}
-
-/**
  * Temporary wrapper class to maintain earlier module interface.
  */
 export class Logger {
