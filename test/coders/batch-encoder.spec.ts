@@ -6,6 +6,7 @@ import {
   encodeAppendSequencerBatch,
   decodeAppendSequencerBatch,
   TxType,
+  sequencerBatch,
 } from '../../src'
 import { expect } from 'chai'
 
@@ -61,7 +62,7 @@ describe('BatchEncoder', () => {
   describe('appendSequencerBatch', () => {
     it('should work with the simple case', () => {
       const batch = {
-        shouldStartAtBatch: 0,
+        shouldStartAtElement: 0,
         totalElementsToAppend: 0,
         contexts: [],
         transactions: [],
@@ -73,7 +74,7 @@ describe('BatchEncoder', () => {
 
     it('should work with more complex case', () => {
       const batch = {
-        shouldStartAtBatch: 10,
+        shouldStartAtElement: 10,
         totalElementsToAppend: 1,
         contexts: [
           {
@@ -88,6 +89,15 @@ describe('BatchEncoder', () => {
       const encoded = encodeAppendSequencerBatch(batch)
       const decoded = decodeAppendSequencerBatch(encoded)
       expect(decoded).to.deep.equal(batch)
+    })
+
+    it('should work with mainnet calldata', () => {
+      const data = require('../fixtures/appendSequencerBatch.json')
+      for (const calldata of data.calldata) {
+        const decoded = sequencerBatch.decode(calldata)
+        const encoded = sequencerBatch.encode(decoded)
+        expect(encoded).to.equal(calldata)
+      }
     })
   })
 

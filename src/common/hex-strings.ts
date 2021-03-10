@@ -60,6 +60,22 @@ export const toHexString = (inp: Buffer | string | number | null): string => {
   }
 }
 
+export const toRpcHexString = (n: number): string => {
+  if (n === 0) {
+    return '0x0'
+  } else {
+    return '0x' + toHexString(n).slice(2).replace(/^0+/, '')
+  }
+}
+
+export const padHexString = (str: string, length: number): string => {
+  if (str.length === 2 + length * 2) {
+    return str
+  } else {
+    return '0x' + str.slice(2).padStart(length * 2, '0')
+  }
+}
+
 export const getLen = (pos: { start; end }) => (pos.end - pos.start) * 2
 
 export const encodeHex = (val: any, len: number) =>
