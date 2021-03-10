@@ -137,15 +137,3 @@ export class Logger {
     }
   }
 }
-
-export const logError = (
-  logger: PinoLogger,
-  message: string,
-  e: Error
-): void => {
-  logger.error(`${message}. 
-    Error: ${e.message}. 
-    Stack: ${e.stack}`)
-}
-
-export const LOG_NEWLINE_STRING = process.env.LOG_NEW_LINES ? '\n' : ' <\\n> '
