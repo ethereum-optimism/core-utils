@@ -68,12 +68,12 @@ export const DEFAULT_ECDSA_TX_FIELD_POSITIONS = {
 
 export const EIP155_TX_FIELD_POSITIONS = DEFAULT_ECDSA_TX_FIELD_POSITIONS
 export const ETH_SIGN_TX_FIELD_POSITIONS = DEFAULT_ECDSA_TX_FIELD_POSITIONS
+export const CTC_TX_GAS_PRICE_MULT_FACTOR = 1_000_000
 
 /***************
  * EcdsaCoders *
  **************/
 
-// Coder for eip155; TODO: Write a library which can auto-encode & decode.
 class DefaultEcdsaTxCoder implements Coder {
   constructor(readonly txType: TxType) {}
 
@@ -100,8 +100,11 @@ class DefaultEcdsaTxCoder implements Coder {
       txData.gasLimit,
       getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.gasLimit)
     )
+    if (txData.gasPrice % CTC_TX_GAS_PRICE_MULT_FACTOR !== 0) {
+      throw new Error(`Gas Price ${txData.gasPrice} cannot be encoded`)
+    }
     const gasPrice = encodeHex(
-      txData.gasPrice,
+      txData.gasPrice / CTC_TX_GAS_PRICE_MULT_FACTOR,
       getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.gasPrice)
     )
     const nonce = encodeHex(
@@ -147,7 +150,8 @@ class DefaultEcdsaTxCoder implements Coder {
         v: parseInt(sliceBytes(pos.sig.v), 16),
       },
       gasLimit: parseInt(sliceBytes(pos.gasLimit), 16),
-      gasPrice: parseInt(sliceBytes(pos.gasPrice), 16),
+      gasPrice:
+        parseInt(sliceBytes(pos.gasPrice), 16) * CTC_TX_GAS_PRICE_MULT_FACTOR,
       nonce: parseInt(sliceBytes(pos.nonce), 16),
       target: add0x(sliceBytes(pos.target)),
       data: add0x(txData.slice(pos.data.start * 2)),

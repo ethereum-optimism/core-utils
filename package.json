@@ -1,6 +1,6 @@
 {
   "name": "@eth-optimism/core-utils",
-  "version": "0.1.5",
+  "version": "0.1.9",
   "main": "build/src/index.js",
   "files": [
     "build/src/**/*"
@@ -19,13 +19,17 @@
   },
   "devDependencies": {
     "@eth-optimism/dev": "^1.1.1",
+    "@types/pino": "^6.3.6",
     "chai": "^4.3.0",
     "mocha": "^8.3.0",
     "ts-mocha": "^8.0.0"
   },
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.0.9",
+    "colors": "^1.4.0",
     "debug": "^4.3.1",
-    "ethers": "^5.0.31"
+    "ethers": "^5.0.31",
+    "pino": "^6.11.1",
+    "pino-pretty": "^4.7.1"
   }
 }
