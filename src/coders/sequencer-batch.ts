@@ -125,17 +125,22 @@ export const decodeAppendSequencerBatch = (
   }
 }
 
-module.exports.sequencerBatch = {
-  encode: (b) => {
+export const sequencerBatch = {
+  encode: (b: AppendSequencerBatchParams) => {
     return (
       ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
       encodeAppendSequencerBatch(b)
     )
   },
-  decode: (b) => {
-    return (
-      ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(0, 10) +
-      decodeAppendSequencerBatch(b)
-    )
+  decode: (b: string): AppendSequencerBatchParams => {
+    b = remove0x(b)
+    const functionSelector = b.slice(0, 8)
+    if (
+      functionSelector !==
+      ethers.utils.id(APPEND_SEQUENCER_BATCH_METHOD_ID).slice(2, 10)
+    ) {
+      throw new Error('Incorrect function signature')
+    }
+    return decodeAppendSequencerBatch(b.slice(8))
   },
 }

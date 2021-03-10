@@ -6,6 +6,7 @@ import {
   encodeAppendSequencerBatch,
   decodeAppendSequencerBatch,
   TxType,
+  sequencerBatch,
 } from '../../src'
 import { expect } from 'chai'
 
@@ -88,6 +89,15 @@ describe('BatchEncoder', () => {
       const encoded = encodeAppendSequencerBatch(batch)
       const decoded = decodeAppendSequencerBatch(encoded)
       expect(decoded).to.deep.equal(batch)
+    })
+
+    it('should work with mainnet calldata', () => {
+      const data = require('../fixtures/appendSequencerBatch.json')
+      for (const calldata of data.calldata) {
+        const decoded = sequencerBatch.decode(calldata)
+        const encoded = sequencerBatch.encode(decoded)
+        expect(encoded).to.equal(calldata)
+      }
     })
   })
 
