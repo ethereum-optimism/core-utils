@@ -1,6 +1,6 @@
 import pino, {
-  Logger as PinoLogger,
   LoggerOptions as PinoLoggerOptions,
+  DestinationObjectOptions,
 } from 'pino'
 
 export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
@@ -8,6 +8,7 @@ export type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
 export interface LoggerOptions {
   name: string
   level?: LogLevel
+  destination?: DestinationObjectOptions
 }
 
 /**
@@ -20,7 +21,7 @@ export class Logger {
   constructor(options: LoggerOptions) {
     this.options = options
 
-    const loggerOptions = {
+    const loggerOptions: PinoLoggerOptions = {
       name: options.name,
 
       level: options.level || 'debug',
@@ -29,7 +30,9 @@ export class Logger {
       base: null,
     }
 
-    this.inner = pino(loggerOptions)
+    this.inner = options.destination
+      ? pino(loggerOptions, pino.destination(options.destination))
+      : pino(loggerOptions)
   }
 
   child(bindings: pino.Bindings): Logger {
