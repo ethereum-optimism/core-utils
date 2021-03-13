@@ -79,7 +79,7 @@ export const toHexString = (
 export const toRpcHexString = (
   inp: Buffer | string | number | null
 ): string => {
-  return '0x' + toHexString(inp).slice(2).replace(/^0+/, '') || '0'
+  return '0x' + (toHexString(inp).slice(2).replace(/^0+/, '') || '0')
 }
 
 /**

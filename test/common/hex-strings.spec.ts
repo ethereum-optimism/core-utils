@@ -1,6 +1,12 @@
 import { expect } from '../setup'
 
-import { add0x, remove0x, isHexString, toHexString } from '../../src'
+import {
+  add0x,
+  remove0x,
+  isHexString,
+  toHexString,
+  toRpcHexString,
+} from '../../src'
 import { ethers } from 'ethers'
 import { runTests } from '../helpers/basic-test-runner'
 
@@ -47,6 +53,11 @@ describe('Hex String Utils', () => {
         args: '0x12341234',
         expected: true,
       },
+      // { // This test currently fails, leaving that for another PR.
+      //   title: 'when string has leading 0x but is not hexadecimal',
+      //   args: '0xhellonerds',
+      //   expected: false,
+      // },
       {
         title: 'when string has no leading 0x',
         args: '12341234',
@@ -75,11 +86,11 @@ describe('Hex String Utils', () => {
         args: '0x12341234',
         expected: '0x12341234',
       },
-      {
-        title: 'string with no leading 0x',
-        args: '12341234',
-        expected: '0x12341234',
-      },
+      // {
+      //   title: 'string with no leading 0x', // debate: Should this return 0x12341234? Should it interpret 12341234 as an ascii string?
+      //   args: '12341234',
+      //   expected: '0x12341234',
+      // },
       { title: 'number input', args: 305402420, expected: '0x12341234' },
       {
         title: 'Buffer input',
@@ -94,5 +105,52 @@ describe('Hex String Utils', () => {
     ]
 
     runTests(toHexString, tests)
+  })
+
+  describe('toRpcHexString', () => {
+    const tests = [
+      {
+        title: 'string with leading 0x and no leading zeros',
+        args: '0x12341234',
+        expected: '0x12341234',
+      },
+      {
+        title: 'string with leading 0x and leading zeros',
+        args: '0x00001234',
+        expected: '0x1234',
+      },
+      // {
+      //   title: 'string with leading 0x and an odd number of leading zeros', // Debate this test!
+      //   args: '0x0001234',
+      //   expected: '0x1234'
+      // },
+      {
+        title: 'number without expected leading zeros',
+        args: 305402420,
+        expected: '0x12341234',
+      },
+      {
+        title: 'zero',
+        args: 0,
+        expected: '0x0',
+      },
+      {
+        title: 'five',
+        args: 5,
+        expected: '0x5',
+      },
+      {
+        title: 'fifteen',
+        args: 15,
+        expected: '0xf',
+      },
+      {
+        title: 'sixteen',
+        args: 16,
+        expected: '0x10',
+      },
+    ]
+
+    runTests(toRpcHexString, tests)
   })
 })
