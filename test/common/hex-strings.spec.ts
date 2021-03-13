@@ -91,7 +91,7 @@ describe('Hex String Utils', () => {
       },
       {
         title: 'string with no leading 0x',
-        args: '0x12341234',
+        args: '12341234',
         expected: '0x12341234',
       },
       { title: 'number input', args: 305402420, expected: '0x12341234' },

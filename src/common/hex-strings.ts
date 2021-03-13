@@ -45,8 +45,10 @@ export const fromHexString = (inp: Buffer | string): Buffer => {
   if (typeof inp === 'string') {
     if (inp.startsWith('0x')) {
       return Buffer.from(inp.slice(2), 'hex')
-    } else {
+    } else if (/^[0-9a-fA-F]+$/.test(inp)) {
       return Buffer.from(inp, 'hex')
+    } else {
+      // Throw? Or just let it fall back to a buffer?
     }
   }
 
