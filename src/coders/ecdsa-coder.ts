@@ -1,5 +1,11 @@
 /* Internal Imports */
-import { add0x, remove0x, toVerifiedBytes, encodeHex, getLen } from '../common'
+import {
+  add0x,
+  remove0x,
+  toVerifiedBytes,
+  encodeHex,
+  getByteLength,
+} from '../common'
 import { Coder, Signature, Uint16, Uint8, Uint24, Address } from './types'
 
 /***********************
@@ -75,40 +81,40 @@ class DefaultEcdsaTxCoder implements Coder {
   public encode(txData: DefaultEcdsaTxData): string {
     const txType = encodeHex(
       this.txType,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.txType)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.txType)
     )
 
     const r = toVerifiedBytes(
       txData.sig.r,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.sig.r)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.sig.r)
     )
     const s = toVerifiedBytes(
       txData.sig.s,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.sig.s)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.sig.s)
     )
     const v = encodeHex(
       txData.sig.v,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.sig.v)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.sig.v)
     )
 
     const gasLimit = encodeHex(
       txData.gasLimit,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.gasLimit)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.gasLimit)
     )
     if (txData.gasPrice % CTC_TX_GAS_PRICE_MULT_FACTOR !== 0) {
       throw new Error(`Gas Price ${txData.gasPrice} cannot be encoded`)
     }
     const gasPrice = encodeHex(
       txData.gasPrice / CTC_TX_GAS_PRICE_MULT_FACTOR,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.gasPrice)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.gasPrice)
     )
     const nonce = encodeHex(
       txData.nonce,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.nonce)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.nonce)
     )
     const target = toVerifiedBytes(
       txData.target,
-      getLen(DEFAULT_ECDSA_TX_FIELD_POSITIONS.target)
+      getByteLength(DEFAULT_ECDSA_TX_FIELD_POSITIONS.target)
     )
     // Make sure that the data is even
     if (txData.data.length % 2 !== 0) {
