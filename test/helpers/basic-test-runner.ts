@@ -9,10 +9,10 @@ interface TestDefinition {
 
 /**
  * Mini helper function for running a series of parametrized tests.
- * @param tests Tests to run.
  * @param func Function to test against.
+ * @param tests Tests to run.
  */
-export const runTests = (tests: TestDefinition[], func: Function) => {
+export const runTests = (func: Function, tests: TestDefinition[]) => {
   for (const test of tests) {
     it(test.title, () => {
       if (test.expectError) {
