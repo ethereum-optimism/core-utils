@@ -2,6 +2,7 @@ import { expect } from '../setup'
 
 import { add0x, remove0x, isHexString, toHexString } from '../../src'
 import { ethers } from 'ethers'
+import { runTests } from '../helpers/basic-test-runner'
 
 describe('Hex String Utils', () => {
   describe('remove0x', () => {
@@ -19,12 +20,7 @@ describe('Hex String Utils', () => {
       // { title: 'when string is not a valid hex string', args: '0x0x12341234', expected: '???' } // Probably should be a test case
     ]
 
-    for (const test of tests) {
-      it(test.title, () => {
-        const output = remove0x(test.args)
-        expect(output).to.equal(test.expected)
-      })
-    }
+    runTests(remove0x, tests)
   })
 
   describe('add0x', () => {
@@ -41,12 +37,7 @@ describe('Hex String Utils', () => {
       },
     ]
 
-    for (const test of tests) {
-      it(test.title, () => {
-        const output = add0x(test.args)
-        expect(output).to.equal(test.expected)
-      })
-    }
+    runTests(add0x, tests)
   })
 
   describe('isHexString', () => {
@@ -74,12 +65,7 @@ describe('Hex String Utils', () => {
       },
     ]
 
-    for (const test of tests) {
-      it(test.title, () => {
-        const output = isHexString(test.args)
-        expect(output).to.equal(test.expected)
-      })
-    }
+    runTests(isHexString, tests)
   })
 
   describe('toHexString', () => {
@@ -107,11 +93,6 @@ describe('Hex String Utils', () => {
       },
     ]
 
-    for (const test of tests) {
-      it(test.title, () => {
-        const output = toHexString(test.args)
-        expect(output).to.equal(test.expected)
-      })
-    }
+    runTests(toHexString, tests)
   })
 })
