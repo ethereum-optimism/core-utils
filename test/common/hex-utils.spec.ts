@@ -9,6 +9,6 @@ describe('getRandomHexString', () => {
   })
 
   it('returns a random address string of the specified length', () => {
-    expect(getRandomHexString(8)).to.equal('0x88888888')
+    expect(getRandomHexString(8)).to.equal('0x' + '88'.repeat(4))
   })
 })

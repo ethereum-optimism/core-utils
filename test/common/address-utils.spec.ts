@@ -9,8 +9,6 @@ describe('getRandomAddress', () => {
   })
 
   it('returns a random address string', () => {
-    expect(getRandomAddress()).to.equal(
-      '0x8888888888888888888888888888888888888888'
-    )
+    expect(getRandomAddress()).to.equal('0x' + '88'.repeat(20))
   })
 })
