@@ -89,10 +89,10 @@ export const toVerifiedBytes = (val: string, len: number) => {
   return val
 }
 
-export const getRandomHexString = (length: number): string => {
+export const getRandomHexString = (byteLength: number): string => {
   return (
     '0x' +
-    [...Array(length)]
+    [...Array(byteLength * 2)]
       .map(() => {
         return Math.floor(Math.random() * 16).toString(16)
       })

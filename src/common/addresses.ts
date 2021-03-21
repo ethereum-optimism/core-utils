@@ -5,5 +5,5 @@ import { ethers } from 'ethers'
 import { getRandomHexString } from './hex-strings'
 
 export const getRandomAddress = (): string => {
-  return ethers.utils.getAddress(getRandomHexString(40))
+  return ethers.utils.getAddress(getRandomHexString(20))
 }
