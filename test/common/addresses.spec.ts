@@ -4,8 +4,14 @@ import { expect } from '../setup'
 import { getRandomAddress } from '../../src'
 
 describe('getRandomAddress', () => {
+  const random = global.Math.random
+
   beforeEach(async () => {
     global.Math.random = () => 0.5
+  })
+
+  afterEach(async () => {
+    global.Math.random = random
   })
 
   it('returns a random address string', () => {
