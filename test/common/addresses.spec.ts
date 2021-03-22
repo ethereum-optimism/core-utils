@@ -6,11 +6,11 @@ import { getRandomAddress } from '../../src'
 describe('getRandomAddress', () => {
   const random = global.Math.random
 
-  beforeEach(async () => {
+  before(async () => {
     global.Math.random = () => 0.5
   })
 
-  afterEach(async () => {
+  after(async () => {
     global.Math.random = random
   })
 
