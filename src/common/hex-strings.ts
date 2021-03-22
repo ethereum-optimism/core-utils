@@ -88,3 +88,18 @@ export const toVerifiedBytes = (val: string, len: number) => {
   }
   return val
 }
+
+/**
+ * @param byteLength The length of the hex string in bytes
+ * @returns a random hex string of the specified byteLength (string length will be byteLength*2)
+ */
+export const getRandomHexString = (byteLength: number): string => {
+  return (
+    '0x' +
+    [...Array(byteLength * 2)]
+      .map(() => {
+        return Math.floor(Math.random() * 16).toString(16)
+      })
+      .join('')
+  )
+}
